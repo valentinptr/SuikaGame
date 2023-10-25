@@ -1,11 +1,11 @@
 import pygame
-def draw(screen):
-    """
-    Draw things to the window. Called once per frame.
-    """
-    screen.fill((0, 0, 0))  # Fill the screen with black.
 
-    # Redraw screen here.
+class Fruit():
+    def __init__(self, id, x, y):
+        self.x = x
+        self.y = y
+        self.id = id
+        print("instanciation d'un fruit")
 
-    # Flip the display so that the things we drew actually show up.
-    pygame.display.flip()
+    def drawFruit(self, screen):
+        pygame.draw.circle(screen, (250, 250, 0), (self.x, self.y), 30)
