@@ -14,7 +14,7 @@ fpsClock = pygame.time.Clock()
 
 
 x = WINDOW_WIDTH / 2
-y = 60
+y = 40
 vX = 1
 vY = 1
 
@@ -33,7 +33,7 @@ while True:  # Loop forever!
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                engine.dropFruit(fruit.id, fruit.x, fruit.y)
+                engine.dropFruit(fruit.id, fruit.position.x, fruit.position.y)
 
     engine.update(dt)
     engine.drawBackground(screen)

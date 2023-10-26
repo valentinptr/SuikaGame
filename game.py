@@ -3,11 +3,16 @@ import pygame
 
 BACKGROUND_COLOR = (50, 50, 50)
 BACKGROUND_WALL = 'black'
-WALL_THICKNESS = 15
+WALL_THICKNESS = 20
 WALL_LENGTH = 600
 WALL_START_POSITION_X = 50
 WALL_END_POSITION_X = 550
 WALL_START_POSITION_Y = 100
+GROUND = WALL_START_POSITION_X + WALL_LENGTH + (WALL_THICKNESS / 2)
+
+GRAVITY = 9.81
+FRICTION_FACTOR = 0.2
+
 class Engine():
     def __init__(self):
         self.fruits = []
@@ -15,7 +20,13 @@ class Engine():
 
     def update(self, dt):
         for fruit in self.fruits:
-            fruit.y += 1
+            fruit.acceleration = pygame.math.Vector2(0, GRAVITY)
+            if (fruit.position.y + fruit.radius) >= (GROUND - (WALL_THICKNESS / 2)): #(GROUND -7) -> 653
+                print("colision avec le sol")
+                fruit.position.y = GROUND - fruit.radius - (WALL_THICKNESS / 2) #620
+                fruit.speed.y = -abs(fruit.speed.y) * FRICTION_FACTOR
+                #fruit.acceleration -= fruit.speed * FRICTION_FACTOR
+            fruit.update(dt)
     def drawBackground(self, screen):
         screen.fill(BACKGROUND_COLOR)
         #Mur gauche
@@ -31,8 +42,8 @@ class Engine():
 
         # Mur bas
         pygame.draw.line(screen, BACKGROUND_WALL,
-                         (WALL_START_POSITION_X - (WALL_THICKNESS / 2), WALL_START_POSITION_X + WALL_LENGTH + (WALL_THICKNESS / 2)),
-                         (WALL_END_POSITION_X + (WALL_THICKNESS / 2), WALL_START_POSITION_X + WALL_LENGTH + (WALL_THICKNESS / 2)),
+                         (WALL_START_POSITION_X - (WALL_THICKNESS / 2), GROUND),
+                         (WALL_END_POSITION_X + (WALL_THICKNESS / 2), GROUND),
                          WALL_THICKNESS)
 
     def drawFruits(self, screen):
