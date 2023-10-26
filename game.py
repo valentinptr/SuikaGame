@@ -13,7 +13,8 @@ GROUND = WALL_START_POSITION_X + WALL_LENGTH + (WALL_THICKNESS / 2)
 GRAVITY = 9.81
 FRICTION_FACTOR = 0.3
 
-class Engine():
+
+class Engine:
     def __init__(self):
         self.fruits = []
         self.score = 0
@@ -37,13 +38,14 @@ class Engine():
                 fruit.speed.x = -abs(fruit.speed.x) * FRICTION_FACTOR
 
             fruit.update(dt)
+
     def drawBackground(self, screen):
         screen.fill(BACKGROUND_COLOR)
-        #Mur gauche
+        # Mur gauche
         pygame.draw.line(screen, BACKGROUND_WALL,
                          (WALL_START_POSITION_X, WALL_START_POSITION_Y),
                          (WALL_START_POSITION_X, WALL_START_POSITION_X + WALL_LENGTH),
-                         WALL_THICKNESS )
+                         WALL_THICKNESS)
         # Mur droit
         pygame.draw.line(screen, BACKGROUND_WALL,
                          (WALL_END_POSITION_X, WALL_START_POSITION_Y),
@@ -59,6 +61,7 @@ class Engine():
     def drawFruits(self, screen):
         for fruit in self.fruits:
             fruit.drawFruit(screen)
+
     def dropFruit(self, id, x, y):
         new_fruit = Fruit(id, x, y)
         self.fruits.append(new_fruit)

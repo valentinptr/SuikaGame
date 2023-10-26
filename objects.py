@@ -1,8 +1,7 @@
 import pygame
 
-FRICTION_FACTOR = 1.1
-MAX_FRUIT_SPEED = 200
-class Fruit():
+
+class Fruit:
     def __init__(self, id, x, y):
         self.id = id
         self.radius = 30
@@ -18,8 +17,7 @@ class Fruit():
 
     def update(self, dt):
         print(self.acceleration, self.speed, self.position)
-        #self.acceleration += -self.speed#(-self.speed * FRICTION_FACTOR)
         self.speed += self.acceleration * dt
-        #if self.speed.magnitude() > 0:
-            #self.speed = self.speed.clamp_magnitude(MAX_FRUIT_SPEED)
+        # if self.speed.magnitude() > 0:
+        # self.speed = self.speed.clamp_magnitude(MAX_FRUIT_SPEED)
         self.position += self.speed * dt
