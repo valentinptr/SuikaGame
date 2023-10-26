@@ -11,7 +11,7 @@ WALL_START_POSITION_Y = 100
 GROUND = WALL_START_POSITION_X + WALL_LENGTH + (WALL_THICKNESS / 2)
 
 GRAVITY = 9.81
-FRICTION_FACTOR = 0.2
+FRICTION_FACTOR = 0.3
 
 class Engine():
     def __init__(self):
@@ -21,11 +21,21 @@ class Engine():
     def update(self, dt):
         for fruit in self.fruits:
             fruit.acceleration = pygame.math.Vector2(0, GRAVITY)
-            if (fruit.position.y + fruit.radius) >= (GROUND - (WALL_THICKNESS / 2)): #(GROUND -7) -> 653
+            if (fruit.position.y + fruit.radius) >= (GROUND - (WALL_THICKNESS / 2)):
                 print("colision avec le sol")
-                fruit.position.y = GROUND - fruit.radius - (WALL_THICKNESS / 2) #620
+                fruit.position.y = GROUND - fruit.radius - (WALL_THICKNESS / 2)
                 fruit.speed.y = -abs(fruit.speed.y) * FRICTION_FACTOR
-                #fruit.acceleration -= fruit.speed * FRICTION_FACTOR
+
+            if (fruit.position.x - fruit.radius) <= (WALL_START_POSITION_X + (WALL_THICKNESS / 2)):
+                print("colision avec le mur gauche")
+                fruit.position.x = WALL_START_POSITION_X + fruit.radius + (WALL_THICKNESS / 2)
+                fruit.speed.x = abs(fruit.speed.x) * FRICTION_FACTOR
+
+            if (fruit.position.x + fruit.radius) >= (WALL_END_POSITION_X - (WALL_THICKNESS / 2)):
+                print("colision avec le mur droit")
+                fruit.position.x = WALL_END_POSITION_X - fruit.radius - (WALL_THICKNESS / 2)
+                fruit.speed.x = -abs(fruit.speed.x) * FRICTION_FACTOR
+
             fruit.update(dt)
     def drawBackground(self, screen):
         screen.fill(BACKGROUND_COLOR)

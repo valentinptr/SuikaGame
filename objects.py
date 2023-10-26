@@ -11,6 +11,7 @@ class Fruit():
         self.position = pygame.math.Vector2(x, y)
         self.speed = pygame.math.Vector2()
         self.acceleration = pygame.math.Vector2()
+        print('Un fruit a été instancié')
 
     def drawFruit(self, screen):
         pygame.draw.circle(screen, self.color, (self.position.x, self.position.y), self.radius)
