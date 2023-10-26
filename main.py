@@ -16,8 +16,6 @@ fpsClock = pygame.time.Clock()
 
 x = WINDOW_WIDTH / 2
 y = 40
-vX = 1
-vY = 1
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Suika Game")
@@ -36,6 +34,8 @@ while True:  # Loop forever!
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 engine.dropFruit(current_fruit.id, current_fruit.position.x, current_fruit.position.y)
+                current_fruit = None
+                drop_time = pygame.time.get_ticks()
 
     engine.update(dt)
     engine.drawBackground(screen)
@@ -46,6 +46,13 @@ while True:  # Loop forever!
         x -= CURSOR_SPEED * dt
     if keys_pressed[pygame.K_RIGHT]:
         x += CURSOR_SPEED * dt
+
+    if current_fruit is None:
+        current_fruit = Fruit(1, x, y)
+
+    else:
+        current_fruit.position.x = x
+        current_fruit.drawFruit(screen)
 
     pygame.display.flip()
     dt = pygame.time.Clock().tick(60) / 1000  # dt = fpsClock.tick(fps)
